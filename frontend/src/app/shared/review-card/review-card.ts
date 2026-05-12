@@ -23,9 +23,7 @@ export class ReviewCard {
 
   readonly review = input.required<Review>();
 
-  protected readonly coverUrl = computed(() =>
-    this.strapi.mediaUrl(this.review().cover),
-  );
+  protected readonly coverUrl = computed(() => this.strapi.coverUrlFor(this.review()));
 
   protected readonly genreLabel = computed(() => GENRE_LABELS[this.review().genre]);
 

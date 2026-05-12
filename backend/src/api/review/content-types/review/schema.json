@@ -33,12 +33,19 @@
       "required": false,
       "allowedTypes": ["images"]
     },
+    "coverUrl": {
+      "type": "string",
+      "maxLength": 500
+    },
     "excerpt": {
       "type": "text",
       "maxLength": 300
     },
     "body": {
       "type": "blocks"
+    },
+    "bodyHtml": {
+      "type": "text"
     },
     "rating": {
       "type": "integer",
