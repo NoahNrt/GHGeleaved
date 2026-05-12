@@ -1,0 +1,96 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="space-y-4 rounded-lg border border-neutral-800 bg-neutral-900 p-5"
+  novalidate
+>
+  <p class="text-xs text-neutral-400">
+    Ihr Kommentar wird zur Moderation eingereicht und erscheint nach Freigabe.
+  </p>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <label class="block">
+      <span class="mb-1 block text-sm font-medium text-neutral-200">
+        Name <span class="text-red-500">*</span>
+      </span>
+      <input
+        type="text"
+        formControlName="authorName"
+        autocomplete="name"
+        maxlength="80"
+        class="w-full rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+      />
+      @if (nameCtrl.touched && nameCtrl.invalid) {
+        <span class="mt-1 block text-xs text-red-400">
+          @if (nameCtrl.errors?.['required']) {
+            Bitte einen Namen angeben.
+          } @else if (nameCtrl.errors?.['maxlength']) {
+            Maximal 80 Zeichen.
+          }
+        </span>
+      }
+    </label>
+
+    <label class="block">
+      <span class="mb-1 block text-sm font-medium text-neutral-200">
+        E-Mail <span class="text-neutral-500">(optional, nicht öffentlich)</span>
+      </span>
+      <input
+        type="email"
+        formControlName="authorEmail"
+        autocomplete="email"
+        class="w-full rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+      />
+      @if (emailCtrl.touched && emailCtrl.invalid) {
+        <span class="mt-1 block text-xs text-red-400">
+          Bitte eine gültige E-Mail-Adresse eingeben.
+        </span>
+      }
+    </label>
+  </div>
+
+  <label class="block">
+    <span class="mb-1 block text-sm font-medium text-neutral-200">
+      Kommentar <span class="text-red-500">*</span>
+    </span>
+    <textarea
+      formControlName="body"
+      rows="5"
+      maxlength="2000"
+      class="w-full rounded border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+    ></textarea>
+    @if (bodyCtrl.touched && bodyCtrl.invalid) {
+      <span class="mt-1 block text-xs text-red-400">
+        @if (bodyCtrl.errors?.['required']) {
+          Bitte einen Kommentar schreiben.
+        } @else if (bodyCtrl.errors?.['maxlength']) {
+          Maximal 2000 Zeichen.
+        }
+      </span>
+    }
+  </label>
+
+  <div class="flex items-center justify-between gap-3">
+    <div class="text-sm" aria-live="polite">
+      @if (status() === 'success') {
+        <span class="text-emerald-400">
+          ✓ Danke! Ihr Kommentar wird geprüft.
+        </span>
+      } @else if (status() === 'error') {
+        <span class="text-red-400">{{ errorMessage() }}</span>
+      }
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="status() === 'submitting' || form.invalid"
+      class="rounded border border-red-600 bg-red-600 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      @if (status() === 'submitting') {
+        Sendet …
+      } @else {
+        Kommentar absenden
+      }
+    </button>
+  </div>
+</form>

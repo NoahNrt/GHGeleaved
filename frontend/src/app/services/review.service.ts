@@ -49,10 +49,14 @@ export class ReviewService {
   /**
    * Fetch a single review by its slug. Strapi returns an array even for unique
    * slugs, so we unwrap to a single entity or `null`.
+   *
+   * Uses `populate=*` so the cover image *and* any media referenced from the
+   * Blocks body field are returned inline — without this, image blocks in the
+   * rich-text body show up without a usable `url`.
    */
   getBySlug(slug: string): Observable<Review | null> {
     const url = this.strapi.apiUrl('/reviews', {
-      'populate': 'cover',
+      'populate': '*',
       'filters[slug][$eq]': slug,
       'pagination[pageSize]': 1,
     });

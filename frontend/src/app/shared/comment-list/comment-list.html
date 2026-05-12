@@ -1,0 +1,26 @@
+@if (comments() === undefined) {
+  <p class="text-sm text-neutral-400">Lädt …</p>
+} @else if (comments() === null) {
+  <p class="text-sm text-neutral-400">Kommentare konnten nicht geladen werden.</p>
+} @else if (comments()!.length === 0) {
+  <p class="text-sm text-neutral-400">
+    Noch keine Kommentare. Schreiben Sie den ersten!
+  </p>
+} @else {
+  <ul class="space-y-4">
+    @for (comment of comments(); track comment.id) {
+      <li class="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
+        <div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+          <span class="font-semibold text-neutral-50">{{ comment.authorName }}</span>
+          <time
+            [attr.datetime]="comment.createdAt"
+            class="text-xs text-neutral-500"
+          >
+            {{ comment.createdAt | date: 'd. MMM yyyy, HH:mm' }}
+          </time>
+        </div>
+        <p class="whitespace-pre-wrap text-sm text-neutral-200">{{ comment.body }}</p>
+      </li>
+    }
+  </ul>
+}

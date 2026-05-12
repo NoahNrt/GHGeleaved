@@ -16,7 +16,7 @@
   <h2 class="mb-6 text-2xl font-bold text-neutral-50">Aktuelle Reviews</h2>
 
   @if (latest() === undefined) {
-    <p class="text-neutral-400">Lädt …</p>
+    <app-review-card-skeleton [count]="8" />
   } @else if (latest()!.length === 0) {
     <p class="text-neutral-400">
       Noch keine Reviews veröffentlicht. Schauen Sie bald wieder vorbei!

@@ -1,10 +1,12 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, of, switchMap } from 'rxjs';
 
 import { ReviewService } from '../../services/review.service';
+import { SeoService } from '../../services/seo.service';
 import { ReviewCard } from '../../shared/review-card/review-card';
+import { ReviewCardSkeleton } from '../../shared/review-card-skeleton/review-card-skeleton';
 import { ALL_GENRES, GENRE_LABELS } from '../../models/review.model';
 import type { Genre, Review } from '../../models/review.model';
 import { NotFound } from '../not-found/not-found';
@@ -17,13 +19,14 @@ import { NotFound } from '../not-found/not-found';
  */
 @Component({
   selector: 'app-genre-list',
-  imports: [ReviewCard, NotFound],
+  imports: [ReviewCard, ReviewCardSkeleton, NotFound],
   templateUrl: './genre-list.html',
   styleUrl: './genre-list.css',
 })
 export class GenreList {
   private readonly route = inject(ActivatedRoute);
   private readonly reviewService = inject(ReviewService);
+  private readonly seo = inject(SeoService);
 
   protected readonly validGenre = toSignal(
     this.route.paramMap.pipe(
@@ -53,4 +56,18 @@ export class GenreList {
     ),
     { initialValue: undefined },
   );
+
+  constructor() {
+    // Update SEO whenever the genre changes (e.g. SPA navigation between
+    // `/buch` and `/film`). Skip when the genre is invalid — that case
+    // renders 404 and we don't want to advertise a fake page title.
+    effect(() => {
+      const label = this.heading();
+      if (!label) return;
+      this.seo.update({
+        title: label,
+        description: `Aktuelle Reviews zu ${label} auf Roter Dorn.`,
+      });
+    });
+  }
 }
