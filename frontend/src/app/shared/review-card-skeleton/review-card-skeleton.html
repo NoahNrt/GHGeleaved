@@ -1,0 +1,24 @@
+<div
+  class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  aria-busy="true"
+  aria-label="Lade Reviews"
+>
+  @for (i of visiblePlaceholders(); track i) {
+    <div class="flex animate-pulse flex-col overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900">
+      <div class="aspect-[3/4] bg-neutral-800"></div>
+      <div class="flex flex-col gap-3 p-4">
+        <div class="flex items-center justify-between">
+          <div class="h-3 w-16 rounded bg-neutral-800"></div>
+          <div class="h-3 w-10 rounded bg-neutral-800"></div>
+        </div>
+        <div class="h-5 w-3/4 rounded bg-neutral-800"></div>
+        <div class="h-3 w-full rounded bg-neutral-800"></div>
+        <div class="h-3 w-5/6 rounded bg-neutral-800"></div>
+        <div class="mt-3 flex items-center justify-between">
+          <div class="h-3 w-20 rounded bg-neutral-800"></div>
+          <div class="h-3 w-14 rounded bg-neutral-800"></div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

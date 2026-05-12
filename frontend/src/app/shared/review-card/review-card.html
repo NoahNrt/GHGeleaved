@@ -1,0 +1,49 @@
+<a
+  [routerLink]="['/', review().genre, review().slug]"
+  class="group flex flex-col overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900 transition-all hover:border-red-600 hover:shadow-lg hover:shadow-red-900/20"
+>
+  <div class="aspect-[3/4] overflow-hidden bg-neutral-800">
+    @if (coverUrl(); as src) {
+      <img
+        [src]="src"
+        [alt]="review().cover?.alternativeText || review().title"
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+      />
+    } @else {
+      <div class="flex h-full w-full items-center justify-center text-neutral-600">
+        <span class="text-4xl">❖</span>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col gap-2 p-4">
+    <div class="flex items-center justify-between text-xs uppercase tracking-wider text-neutral-400">
+      <span class="font-semibold text-red-500">{{ genreLabel() }}</span>
+      @if (stars(); as s) {
+        <span class="text-amber-400" [attr.aria-label]="review().rating + ' von 5 Sternen'">
+          {{ s }}
+        </span>
+      }
+    </div>
+
+    <h3 class="text-lg font-bold leading-tight text-neutral-50 group-hover:text-red-400">
+      {{ review().title }}
+    </h3>
+
+    @if (review().excerpt) {
+      <p class="line-clamp-3 text-sm text-neutral-300">{{ review().excerpt }}</p>
+    }
+
+    <div class="mt-auto flex items-center justify-between pt-2 text-xs text-neutral-500">
+      @if (review().authorName) {
+        <span>von {{ review().authorName }}</span>
+      } @else {
+        <span></span>
+      }
+      <time [attr.datetime]="review().publishedAt">
+        {{ review().publishedAt | date: 'd. MMM yyyy' }}
+      </time>
+    </div>
+  </div>
+</a>

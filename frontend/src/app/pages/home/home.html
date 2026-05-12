@@ -1,0 +1,31 @@
+<section class="border-b border-neutral-800 bg-gradient-to-b from-neutral-900 to-neutral-950">
+  <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+    <p class="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-red-500">
+      Das Medienportal
+    </p>
+    <h1 class="text-4xl font-bold leading-tight text-neutral-50 sm:text-5xl">
+      Reviews zu Büchern, Filmen, Musik und Spielen.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-neutral-300">
+      Willkommen bei Roter Dorn. Hier teilen wir, was wir gelesen, gesehen, gehört und gespielt haben — kritisch, ehrlich und mit Liebe zur Sache.
+    </p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+  <h2 class="mb-6 text-2xl font-bold text-neutral-50">Aktuelle Reviews</h2>
+
+  @if (latest() === undefined) {
+    <app-review-card-skeleton [count]="8" />
+  } @else if (latest()!.length === 0) {
+    <p class="text-neutral-400">
+      Noch keine Reviews veröffentlicht. Schauen Sie bald wieder vorbei!
+    </p>
+  } @else {
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      @for (review of latest(); track review.id) {
+        <app-review-card [review]="review" />
+      }
+    </div>
+  }
+</section>
