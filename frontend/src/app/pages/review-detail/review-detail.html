@@ -83,7 +83,12 @@
       </div>
     </div>
 
-    @if (r.body && r.body.length > 0) {
+    @if (r.bodyHtml) {
+      <div
+        class="prose prose-invert prose-neutral max-w-prose prose-headings:text-neutral-50 prose-strong:text-neutral-50 prose-a:text-red-400 hover:prose-a:text-red-300 prose-blockquote:border-l-red-600 prose-img:rounded"
+        [innerHTML]="r.bodyHtml"
+      ></div>
+    } @else if (r.body && r.body.length > 0) {
       <div class="max-w-prose">
         <app-blocks-renderer [blocks]="r.body" />
       </div>

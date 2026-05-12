@@ -67,7 +67,7 @@ export class ReviewDetail {
     return r != null && r.genre === p.genre;
   });
 
-  protected readonly coverUrl = computed(() => this.strapi.mediaUrl(this.review()?.cover ?? null));
+  protected readonly coverUrl = computed(() => this.strapi.coverUrlFor(this.review()));
 
   protected readonly genreLabel = computed(() => {
     const r = this.review();

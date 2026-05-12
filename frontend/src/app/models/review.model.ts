@@ -55,9 +55,21 @@ export interface Review {
   slug: string;
   genre: Genre;
   cover: StrapiImage | null;
+  /**
+   * Absolute URL to an externally-hosted cover image (e.g. legacy WordPress
+   * uploads). Used when no Strapi Media `cover` is attached. ReviewCard /
+   * ReviewDetail prefer the Strapi Media if both are set.
+   */
+  coverUrl: string | null;
   excerpt: string | null;
-  /** Strapi Blocks rich text — opaque until we render it in Phase 3. */
+  /** Strapi Blocks rich text. Used for reviews authored in the Strapi admin. */
   body: unknown[] | null;
+  /**
+   * Raw HTML — used for legacy WordPress-imported reviews. When present,
+   * frontends should render this through a sanitised innerHTML binding
+   * inside a `.prose` container and skip the Blocks renderer.
+   */
+  bodyHtml: string | null;
   rating: number | null;
   subjectTitle: string | null;
   subjectCreator: string | null;

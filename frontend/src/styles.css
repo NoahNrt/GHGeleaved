@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Site-wide base styles. Body classes in index.html cover the dark theme;
    everything below is just a sensible default font stack and link reset. */

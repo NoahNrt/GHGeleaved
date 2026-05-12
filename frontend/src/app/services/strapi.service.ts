@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import type { StrapiImage } from '../models/review.model';
+import type { Review, StrapiImage } from '../models/review.model';
 
 /**
  * Shared helpers for talking to the Strapi backend:
@@ -34,6 +34,17 @@ export class StrapiService {
     if (!url) return null;
     if (/^https?:\/\//i.test(url)) return url;
     return `${this.baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+  }
+
+  /**
+   * Pick the best cover image URL for a review:
+   *   1. A Strapi Media upload, when an admin has attached one in the panel.
+   *   2. An external `coverUrl` (e.g. legacy WordPress upload).
+   *   3. `null` — caller should render a placeholder.
+   */
+  coverUrlFor(review: Pick<Review, 'cover' | 'coverUrl'> | null | undefined): string | null {
+    if (!review) return null;
+    return this.mediaUrl(review.cover) ?? this.mediaUrl(review.coverUrl);
   }
 
   private buildQueryString(params?: Record<string, string | number | undefined>): string {
